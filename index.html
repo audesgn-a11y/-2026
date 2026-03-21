@@ -26,7 +26,8 @@
         }
 
         .main-container.open-state {
-            transform: translateY(120px); /* Немного уменьшил сдвиг для баланса */
+            /* Оставляем небольшой сдвиг вниз, чтобы письмо было лучше видно, но задний план сохранялся */
+            transform: translateY(100px); 
         }
 
         /* КОНВЕРТ */
@@ -34,7 +35,7 @@
             position: relative;
             width: 320px;
             height: 220px;
-            background: var(--velvet-green);
+            background: var(--velvet-green); /* Это задняя стенка */
             border-radius: 0 0 8px 8px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             cursor: pointer;
@@ -45,7 +46,7 @@
         /* ПИСЬМО */
         .letter {
             position: absolute;
-            top: 5px; /* ИСПРАВЛЕНО: начальное положение чуть ниже края */
+            top: 5px; /* Начальное положение чуть ниже края */
             left: 10px; right: 10px;
             height: 210px; 
             background: #ffffff;
@@ -54,7 +55,7 @@
             text-align: center;
             display: flex; flex-direction: column; justify-content: space-between;
             
-            z-index: 15; /* ИСПРАВЛЕНО: изначально под передней стенкой (30) */
+            z-index: 15; /* Изначально под передней стенкой */
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1), z-index 0s 0.3s;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
@@ -93,15 +94,23 @@
             transition: opacity 0.3s;
         }
 
+        /* ВЕРНУЛИ ДВА КОЛЬЦА НА СУРГУЧ */
+        .wax-seal::after {
+            content: '';
+            width: 35px; height: 35px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="rgba(138,109,29,0.8)" stroke-width="3"><circle cx="24" cy="32" r="12"/><circle cx="40" cy="32" r="12"/></svg>');
+            background-size: contain; background-repeat: no-repeat;
+        }
+
         /* СОСТОЯНИЕ ОТКРЫТО */
         .main-container.open .envelope-flap {
             transform: rotateX(180deg);
-            z-index: 5; /* Уходит назад */
+            z-index: 5; /* Уходит назад, за письмо */
         }
 
         .main-container.open .letter {
-            transform: translateY(-110%); /* ИСПРАВЛЕНО: вылетает наверх */
-            z-index: 50; /* ИСПРАВЛЕНО: теперь письмо выше всех элементов конверта */
+            transform: translateY(-110%); /* Вылетает наверх */
+            z-index: 50; /* Теперь письмо выше всех элементов конверта */
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2), z-index 0s 0.2s;
         }
 
@@ -155,7 +164,7 @@
                     <span style="color:#b38728; font-weight:bold; font-size:15px;">27 МАРТА | 14:00</span>
                     <p style="margin:3px 0 0; font-size:13px; color: #333;">Кафе Ботанического сада</p>
                 </div>
-                <a href="#" 
+                <a href="https://maps.app.goo.gl/6oSBdpnAvEbbkUbU6?g_st=it" 
                    class="location-btn" 
                    target="_blank" 
                    onclick="event.stopPropagation()">

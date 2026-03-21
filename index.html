@@ -9,13 +9,12 @@
     <style>
         :root {
             --velvet-green: #0a2e1f;
-            --dark-green: #051a12;
             --gold-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
 
         body, html {
             height: 100%; margin: 0;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             background-color: #d1d1d1;
             font-family: 'Playfair Display', serif;
         }
@@ -26,75 +25,62 @@
             perspective: 1000px;
         }
 
-        /* Опускаем конверт вниз при открытии, чтобы письмо не ушло за экран телефона */
         .main-container.open-state {
-            transform: translateY(150px);
+            transform: translateY(180px);
         }
 
-        /* ОСНОВНОЙ КОРПУС КОНВЕРТА */
+        /* КОРПУС КОНВЕРТА */
         .envelope {
             position: relative;
             width: 320px;
             height: 220px;
             background: var(--velvet-green);
             border-radius: 0 0 8px 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             cursor: pointer;
-            z-index: 10;
+            z-index: 20;
         }
 
-        /* Внутреннее пространство, где прячется письмо */
-        .letter-container {
-            position: absolute;
-            inset: 0;
-            overflow: hidden; /* КРИТИЧНО: полностью скрывает письмо вне границ */
-            z-index: 5;
-            border-radius: 0 0 8px 8px;
-        }
-
-        /* КАРТОЧКА ПИСЬМА */
+        /* ПИСЬМО */
         .letter {
             position: absolute;
-            top: 10px; /* Изначально внутри */
-            left: 15px;
-            right: 15px;
-            height: 280px;
+            top: 5px; /* Спрятано внутри */
+            left: 15px; right: 15px;
+            height: 310px; /* Достаточно места для кнопки */
             background: #ffffff;
             padding: 25px 20px;
             box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transform: translateY(220px); /* Полностью утоплено вниз */
+            display: flex; flex-direction: column; justify-content: space-between;
+            
+            /* Скрываем письмо за конвертом */
+            z-index: 10; 
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
 
-        /* ПЕРЕДНИЙ КЛАПАН (КАРМАН) С РЕЛЬЕФОМ */
+        /* ПЕРЕДНИЙ КАРМАН С ОБРЕЗКОЙ НИЗА */
         .envelope-front {
             position: absolute;
             inset: 0;
             background: var(--velvet-green);
             clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
-            z-index: 15;
-            box-shadow: inset 0 30px 40px rgba(0,0,0,0.5);
+            z-index: 30;
             border-radius: 0 0 8px 8px;
+            overflow: hidden; /* Это обрежет письмо СНИЗУ, пока оно внутри */
         }
 
-        /* ВЕРХНЯЯ КРЫШКА */
+        /* ВЕРХНИЙ КЛАПАН */
         .envelope-flap {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: #0e3d2a;
+            background: #0d3826;
             clip-path: polygon(0 0, 100% 0, 50% 100%);
             transform-origin: top;
-            transition: transform 0.7s ease-in-out;
-            z-index: 25;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.6s ease-in-out;
+            z-index: 40;
         }
 
-        /* СУРГУЧНАЯ ПЕЧАТЬ */
         .wax-seal {
             position: absolute;
             bottom: 15%; left: 50%;
@@ -103,8 +89,7 @@
             background: radial-gradient(circle, #fcf6ba 0%, #d4af37 100%);
             border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.3);
-            transition: opacity 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
 
         .wax-seal::after {
@@ -114,55 +99,54 @@
             background-size: contain; background-repeat: no-repeat;
         }
 
-        /* ТЕКСТ ПИСЬМА */
+        /* ОТКРЫТИЕ */
+        .main-container.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 5;
+        }
+
+        .main-container.open .letter {
+            transform: translateY(-280px); /* Выезд вверх */
+            z-index: 50; /* Теперь письмо ПОВЕРХ всего конверта */
+        }
+
+        .main-container.open .wax-seal {
+            opacity: 0;
+        }
+
+        /* ТЕКСТ */
         .letter h1 {
             font-size: 20px; margin: 5px 0;
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .event-block {
             border-top: 1px solid #d4af37; border-bottom: 1px solid #d4af37;
-            padding: 12px 0; margin: 10px 0;
+            padding: 10px 0; margin: 8px 0;
         }
         .location-btn {
             background: var(--velvet-green); color: #fff;
-            padding: 10px; text-decoration: none; font-size: 11px;
+            padding: 12px; text-decoration: none; font-size: 11px;
             text-transform: uppercase; border: 1px solid #d4af37; border-radius: 2px;
-            transition: background 0.3s;
+            display: inline-block;
         }
-        .location-btn:hover { background: #164a36; }
-
-        /* АНИМАЦИЯ ОТКРЫТИЯ */
-        .main-container.open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 1; /* Уходит под письмо */
-        }
-        .main-container.open .letter {
-            transform: translateY(-200px); /* Красиво выезжает вверх */
-        }
-        .main-container.open .wax-seal {
-            opacity: 0; pointer-events: none;
-        }
-
+        
         .instruction {
-            position: absolute; bottom: -60px; width: 100%;
-            text-align: center; font-size: 13px; color: #555; font-style: italic;
+            margin-top: 40px; font-size: 14px; color: #555; font-style: italic;
         }
     </style>
 </head>
 <body>
 
-<div id="mainWrapper" class="main-container">
-    <div class="envelope" onclick="openEnvelope()">
-        
-        <div class="envelope-flap">
-            <div class="wax-seal"></div>
-        </div>
+    <div id="mainWrapper" class="main-container">
+        <div class="envelope" onclick="openEnvelope()">
+            
+            <div class="envelope-flap">
+                <div class="wax-seal"></div>
+            </div>
 
-        <div class="letter-container">
             <div class="letter">
                 <div>
                     <p style="margin:0; font-style:italic; color:#777; font-size:14px;">Рауль и Александра</p>
@@ -180,13 +164,12 @@
                     Открыть локацию
                 </a>
             </div>
+
+            <div class="envelope-front"></div>
         </div>
-
-        <div class="envelope-front"></div>
-
-        <div class="instruction">Нажмите на конверт</div>
     </div>
-</div>
+
+    <div class="instruction">Нажмите на конверт</div>
 
 <script>
     function openEnvelope() {

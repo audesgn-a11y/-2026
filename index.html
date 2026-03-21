@@ -29,7 +29,6 @@ body, html {
     overflow: hidden;
 }
 
-/* КОНВЕРТ */
 .envelope-wrapper {
     position: relative;
     width: 320px;
@@ -80,15 +79,15 @@ body, html {
     background-repeat: no-repeat;
 }
 
-/* КАРТОЧКА */
+/* УМЕНЬШЕННАЯ КАРТОЧКА */
 .letter {
     position: absolute;
     bottom: 5px;
     width: 300px;
-    height: 380px;
+    height: 300px; /* уменьшили высоту */
     background-color: var(--card-white);
     background-image: var(--paper-texture);
-    padding: 25px 15px;
+    padding: 20px 15px; /* чуть меньше padding */
     box-sizing: border-box;
     border-radius: 2px;
     opacity: 0;
@@ -112,12 +111,11 @@ body, html {
     font-size: 14px;
 }
 
-/* БЛОК ДАТЫ */
 .event-block {
     border-top: 1px solid #d4af37;
     border-bottom: 1px solid #d4af37;
-    padding: 14px 0 10px 0;
-    margin-top: -5px;
+    padding: 12px 0 8px 0;
+    margin-top: -3px; /* чуть приподняли блок даты */
 }
 
 .event-date {
@@ -132,7 +130,6 @@ body, html {
     font-size: 14px;
 }
 
-/* WOW-КНОПКА */
 .location-btn {
     background: linear-gradient(145deg, #0a2e1f, #164a36);
     color: white;
@@ -185,7 +182,6 @@ body, html {
     left: 100%;
 }
 
-/* АНИМАЦИЯ */
 .envelope-wrapper.open .envelope-flap {
     transform: rotateX(180deg);
     z-index: 5;

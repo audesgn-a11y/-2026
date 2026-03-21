@@ -1,226 +1,222 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta property="og:title" content="Приглашение на свадьбу: Рауль и Александра">
-    <meta property="og:description" content="27 марта в 14:00. Кафе Ботанического сада. Нажмите, чтобы открыть!">
-    <meta property="og:type" content="website">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Приглашение: Рауль и Александра</title>
-    <style>
-        :root {
-            --velvet-green-base: #0a2e1f;
-            --velvet-gradient: radial-gradient(circle at center, #164a36 0%, #0a2e1f 100%);
-            --gold-color: #d4af37;
-            --gold-text: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-            --card-white: #ffffff;
-            --velvet-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.3"/></svg>');
-            --paper-texture: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="paper-noise"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" stitchTiles="stitch"/><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"/></filter><rect width="100" height="100" filter="url(%23paper-noise)"/></svg>');
-        }
+<title>Приглашение: Рауль и Александра</title>
 
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #e8e8e8;
-            font-family: 'Playfair Display', serif;
-            overflow: hidden;
-        }
+<style>
+:root {
+    --velvet-green-base: #0a2e1f;
+    --velvet-gradient: radial-gradient(circle at center, #164a36 0%, #0a2e1f 100%);
+    --gold-color: #d4af37;
+    --gold-text: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    --card-white: #ffffff;
+}
 
-        .envelope-wrapper {
-            position: relative;
-            width: 320px;
-            height: 230px;
-            background: var(--velvet-gradient);
-            border-radius: 4px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            cursor: pointer;
-            perspective: 2000px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end; /* Карточка растет снизу */
-            z-index: 10;
-        }
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e8e8e8;
+    font-family: 'Playfair Display', serif;
+    overflow: hidden;
+}
 
-        /* КЛАПАН */
-        .envelope-flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--velvet-gradient);
-            background-image: var(--velvet-texture);
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: top;
-            z-index: 30;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
-        }
+/* КОНВЕРТ */
+.envelope-wrapper {
+    position: relative;
+    width: 320px;
+    height: 230px;
+    background: var(--velvet-gradient);
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    cursor: pointer;
+    perspective: 2000px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
 
-        /* ПЕЧАТЬ С КОЛЬЦАМИ */
-        .wax-seal {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle, #fcf6ba 0%, #d4af37 100%);
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 40;
-            transition: opacity 0.4s;
-        }
+.envelope-flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--velvet-gradient);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: transform 0.8s;
+    transform-origin: top;
+    z-index: 3;
+}
 
-        .wax-seal::after {
-            content: '';
-            width: 30px;
-            height: 30px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="%238a6d1d" stroke-width="2.5"><circle cx="24" cy="32" r="14"/><circle cx="40" cy="32" r="14"/></svg>');
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
+.wax-seal {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55px;
+    height: 55px;
+    background: radial-gradient(circle, #fcf6ba, #d4af37);
+    border-radius: 50%;
+    z-index: 4;
+    transition: opacity 0.4s;
+}
 
-        /* КАРТОЧКА */
-        .letter {
-            position: absolute;
-            bottom: 5px;
-            width: 300px;
-            height: 380px; 
-            background-color: var(--card-white);
-            background-image: 
-                var(--paper-texture),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,20 Q10,0 30,10" fill="none" stroke="%234a6741" stroke-width="0.5" opacity="0.3"/></svg>');
-            z-index: 20;
-            transition: transform 0.9s ease-in-out, opacity 0.5s;
-            transform: translateY(0);
-            padding: 25px 15px; 
-            box-sizing: border-box;
-            border-radius: 2px;
-            opacity: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+/* КАРТОЧКА */
+.letter {
+    position: absolute;
+    bottom: 5px;
+    width: 300px;
+    height: 380px;
+    background: white;
+    padding: 25px 15px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(0);
+    transition: 0.9s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-        .letter h1 {
-            font-size: 20px; 
-            background: var(--gold-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 5px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-align: center;
-        }
+.letter h1 {
+    font-size: 20px;
+    background: var(--gold-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
 
-        .letter p {
-            font-size: 14px; 
-            color: #444;
-            margin: 5px 0;
-            line-height: 1.4;
-            text-align: center;
-        }
+.letter p {
+    text-align: center;
+    font-size: 14px;
+}
 
-        .nav-info {
-            font-size: 12px;
-            color: #555;
-            background: rgba(250, 250, 250, 0.8); 
-            padding: 8px;
-            border-top: 1px solid #eee;
-            margin: 10px 0;
-            line-height: 1.4;
-        }
+/* КНОПКА WOW */
+.location-btn {
+    background: linear-gradient(145deg, #0a2e1f, #164a36);
+    color: #fff;
+    padding: 12px 0;
+    width: 100%;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid #d4af37;
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    border-radius: 3px;
 
-        .location-btn {
-            background: var(--velvet-green-base);
-            color: white;
-            padding: 10px 0;
-            width: 100%;
-            text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border: 1px solid var(--gold-color);
-            transition: 0.3s;
-            display: block;
-            text-align: center;
-        }
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        .location-btn:hover {
-            background: var(--gold-color);
-            color: #000;
-        }
+.envelope-wrapper.open .location-btn {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+    box-shadow: 0 0 12px rgba(212,175,55,0.5);
+}
 
-        /* АНИМАЦИЯ ОТКРЫТИЯ */
-        .envelope-wrapper.open .envelope-flap {
-            transform: rotateX(180deg);
-            z-index: 5; 
-        }
+.location-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(145deg, #d4af37, #f5e6a6);
+    color: #000;
+    box-shadow: 0 0 20px rgba(212,175,55,0.8);
+}
 
-        .envelope-wrapper.open .wax-seal {
-            opacity: 0;
-            pointer-events: none;
-        }
+/* блик */
+.location-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.7), transparent);
+    transition: 0.6s;
+}
 
-        /* ОГРАНИЧИЛ ВЫСОТУ ВЫЛЕТА */
-        .envelope-wrapper.open .letter {
-            transform: translateY(-160px); 
-            opacity: 1;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
+.location-btn:hover::before {
+    left: 100%;
+}
 
-        .instruction {
-            position: absolute;
-            bottom: -40px;
-            width: 100%;
-            text-align: center;
-            color: #333;
-            font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-    </style>
+/* ОТКРЫТИЕ */
+.envelope-wrapper.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-wrapper.open .wax-seal {
+    opacity: 0;
+}
+
+.envelope-wrapper.open .letter {
+    transform: translateY(-160px);
+    opacity: 1;
+}
+
+/* подпись */
+.instruction {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    font-size: 10px;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="envelope-wrapper" onclick="this.classList.toggle('open')">
-        <div class="envelope-flap">
-            <div class="wax-seal"></div>
-        </div>
-        
-        <div class="letter">
-            <div>
-                <p style="font-style: italic; color: #888; margin-bottom: 2px;">Рауль и Александра</p>
-                <h1>Приглашают Вас</h1>
-                <p style="font-size: 13px; color: #444;">на торжество по случаю нашей свадьбы</p>
-            </div>
-            
-            <div style="border-bottom: 1px solid #d4af37; border-top: 1px solid #d4af37; padding: 10px 0; width: 100%; margin: 10px 0;">
-                <p style="font-weight: bold; margin: 0; color: #b38728; font-size: 16px; text-align: center;">27 МАРТА | 14:00</p>
-                <p style="margin: 3px 0; font-size: 14px; text-align: center;">Кафе Ботанического сада</p>
-            </div>
-            
-            <div class="nav-info">
-                Вход со стороны <strong>ул. Сурганова</strong><br>
-                (ст. м. Академия наук)<br>
-                <span style="display: block; margin-top: 5px; color: #2e4d26; font-size: 11px; text-align: center;">На входе сообщите, что вы в кафе на мероприятие.</span>
-            </div>
-
-            <a href="https://maps.app.goo.gl/6oSBdpnAvEbbkUbU6?g_st=it" class="location-btn" target="_blank" onclick="event.stopPropagation()">Открыть локацию</a>
-        </div>
-        
-        <div class="instruction">Нажмите на конверт</div>
+<div class="envelope-wrapper" onclick="toggleInvite(this)">
+    <div class="envelope-flap">
+        <div class="wax-seal"></div>
     </div>
+
+    <div class="letter">
+        <div>
+            <p style="font-style: italic; color: #888;">Рауль и Александра</p>
+            <h1>Приглашают Вас</h1>
+            <p>на торжество по случаю нашей свадьбы</p>
+        </div>
+
+        <div style="border-top:1px solid #d4af37;border-bottom:1px solid #d4af37;padding:10px 0;">
+            <p style="font-weight:bold;color:#b38728;">27 МАРТА | 14:00</p>
+            <p>Кафе Ботанического сада</p>
+
+            <a href="https://maps.app.goo.gl/6oSBdpnAvEbbkUbU6?g_st=it"
+               class="location-btn"
+               target="_blank"
+               onclick="event.stopPropagation()">
+               Открыть локацию
+            </a>
+        </div>
+    </div>
+
+    <div class="instruction">Нажмите на конверт</div>
+</div>
+
+<!-- звук -->
+<audio id="openSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c08a1b.mp3?filename=paper-unwrap-102474.mp3"></audio>
+
+<script>
+function toggleInvite(el) {
+    el.classList.toggle('open');
+
+    const sound = document.getElementById('openSound');
+    if (el.classList.contains('open')) {
+        sound.currentTime = 0;
+        sound.play();
+    }
+}
+</script>
 
 </body>
 </html>

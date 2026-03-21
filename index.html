@@ -26,7 +26,6 @@
         }
 
         .main-container.open-state {
-            /* Оставляем небольшой сдвиг вниз, чтобы письмо было лучше видно, но задний план сохранялся */
             transform: translateY(100px); 
         }
 
@@ -35,27 +34,33 @@
             position: relative;
             width: 320px;
             height: 220px;
-            background: var(--velvet-green); /* Это задняя стенка */
+            background: var(--velvet-green);
             border-radius: 0 0 8px 8px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             cursor: pointer;
             z-index: 20;
-            /* overflow: hidden;  <-- УДАЛЕНО, чтобы письмо было видно снаружи */
         }
 
         /* ПИСЬМО */
         .letter {
             position: absolute;
-            top: 5px; /* Начальное положение чуть ниже края */
+            top: 5px;
             left: 10px; right: 10px;
             height: 210px; 
             background: #ffffff;
             padding: 20px 15px;
             box-sizing: border-box;
             text-align: center;
-            display: flex; flex-direction: column; justify-content: space-between;
             
-            z-index: 15; /* Изначально под передней стенкой */
+            /* --- ИСПРАВЛЕНО ДЛЯ ЦЕНТРИРОВАНИЯ --- */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; /* Центрирование по вертикали */
+            align-items: center;     /* Центрирование по горизонтали */
+            gap: 15px;               /* Отступ между основными блоками текста */
+            /* ----------------------------------- */
+            
+            z-index: 15;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1), z-index 0s 0.3s;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
@@ -65,7 +70,6 @@
             position: absolute;
             inset: 0;
             background: var(--velvet-green);
-            /* Вырез, чтобы видеть письмо внутри */
             clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
             z-index: 30; 
             border-radius: 0 0 8px 8px;
@@ -94,7 +98,6 @@
             transition: opacity 0.3s;
         }
 
-        /* ВЕРНУЛИ ДВА КОЛЬЦА НА СУРГУЧ */
         .wax-seal::after {
             content: '';
             width: 35px; height: 35px;
@@ -105,12 +108,12 @@
         /* СОСТОЯНИЕ ОТКРЫТО */
         .main-container.open .envelope-flap {
             transform: rotateX(180deg);
-            z-index: 5; /* Уходит назад, за письмо */
+            z-index: 5;
         }
 
         .main-container.open .letter {
-            transform: translateY(-110%); /* Вылетает наверх */
-            z-index: 50; /* Теперь письмо выше всех элементов конверта */
+            transform: translateY(-110%);
+            z-index: 50;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2), z-index 0s 0.2s;
         }
 
@@ -119,9 +122,10 @@
             pointer-events: none;
         }
 
-        /* ОСТАЛЬНЫЕ СТИЛИ */
+        /* СТИЛИ ТЕКСТА (немного подправлены отступы внутри блоков) */
         .letter h1 {
-            font-size: 18px; margin: 5px 0;
+            font-size: 18px; 
+            margin: 5px 0; /* Уменьшен отступ */
             background: var(--gold-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -130,14 +134,18 @@
 
         .event-block {
             border-top: 1px solid #d4af37; border-bottom: 1px solid #d4af37;
-            padding: 8px 0; margin: 5px 0;
+            padding: 8px 0; 
+            margin: 0; /* Убран внешний отступ, так как есть gap */
+            width: 100%; /* Чтобы линия была на всю ширину padding письма */
         }
 
         .location-btn {
             background: var(--velvet-green); color: #fff;
-            padding: 10px; text-decoration: none; font-size: 10px;
+            padding: 10px 20px; /* Немного увеличил боковые отступы */
+            text-decoration: none; font-size: 10px;
             text-transform: uppercase; border: 1px solid #d4af37; border-radius: 2px;
             display: inline-block;
+            margin-top: 5px; /* Небольшой отступ сверху */
         }
         
         .instruction {
@@ -155,15 +163,17 @@
             </div>
 
             <div class="letter">
-                <div>
+                <div class="text-group">
                     <p style="margin:0; font-style:italic; color:#777; font-size:12px;">Рауль и Александра</p>
                     <h1>Приглашают Вас</h1>
-                    <p style="font-size:13px; margin-top: 5px;">на ланч по случаю свадьбы</p>
+                    <p style="font-size:13px; margin: 5px 0 0 0;">на ланч по случаю свадьбы</p>
                 </div>
+                
                 <div class="event-block">
                     <span style="color:#b38728; font-weight:bold; font-size:15px;">27 МАРТА | 14:00</span>
                     <p style="margin:3px 0 0; font-size:13px; color: #333;">Кафе Ботанического сада</p>
                 </div>
+                
                 <a href="https://maps.app.goo.gl/6oSBdpnAvEbbkUbU6?g_st=it" 
                    class="location-btn" 
                    target="_blank" 

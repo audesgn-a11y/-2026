@@ -1,296 +1,207 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение: Рауль и Александра</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-<title>Приглашение на свадьбу</title>
+    <style>
+        :root {
+            --velvet-green: #0a2e1f;
+            --dark-green: #051a12;
+            --gold-text: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
 
-<style>
-:root {
-    --velvet-green-base: #0a2e1f;
-    --velvet-gradient: radial-gradient(circle at center, #164a36 0%, #0a2e1f 100%);
-    --gold-color: #d4af37;
-    --gold-text: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
-    --envelope-w: 90vw;
-    --envelope-h: 60vw;
-    --envelope-max-w: 380px;
-    --envelope-max-h: 260px;
-}
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #d1d1d1;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
 
-/* БАЗА */
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #e8e8e8;
-    font-family: 'Georgia', serif; /* Более надежный serif шрифт */
-    padding: 20px; /* Увеличил padding для безопасности */
-    box-sizing: border-box;
-    overflow-x: hidden; /* Предотвращаем горизонтальный скролл */
-}
+        .main-container {
+            position: relative;
+            transition: transform 0.8s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* КОНВЕРТ - ОСНОВНОЙ КОНТЕЙНЕР */
-.envelope-wrapper {
-    width: var(--envelope-w);
-    max-width: var(--envelope-max-w);
-    height: var(--envelope-h);
-    max-height: var(--envelope-max-h);
-    position: relative;
-    background: var(--velvet-gradient);
-    border-radius: 8px; /* Чуть больше скругление */
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    cursor: pointer;
-    perspective: 1500px; /* Для 3D эффекта клапана */
-    transition: transform 0.3s ease;
-    /* Убедимся, что wrapper позиционирован */
-    z-index: 1;
-}
+        /* Когда открыто, опускаем всё вниз, чтобы письмо влезло в экран телефона */
+        .main-container.shifted {
+            transform: translateY(120px);
+        }
 
-/* Элементы внутри wrapper по умолчанию имеют z-index auto или 1 */
+        .envelope-wrapper {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: var(--velvet-green);
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 10px 30px var(--shadow);
+            cursor: pointer;
+            perspective: 1000px;
+        }
 
-/* КЛАПАН (ОТКИДНАЯ ЧАСТЬ) */
-.envelope-flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--velvet-gradient);
-    /* Форма треугольника */
-    clip-path: polygon(0 0, 100% 0, 50% 60%); /* Заострил чуть меньше для стиля */
-    transform-origin: top;
-    transition: transform 0.6s ease-in-out, z-index 0.6s;
-    z-index: 3; /* Изначально над письмом */
-    border-radius: 8px 8px 0 0;
-}
+        /* Передние клапаны конверта (создают эффект кармана) */
+        .envelope-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 30;
+            background: var(--velvet-green);
+            clip-path: polygon(0% 0%, 50% 50%, 100% 0%, 100% 100%, 0% 100%);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            border-radius: 0 0 5px 5px;
+        }
 
-/* ПЕЧАТЬ (ТЕПЕРЬ ОТДЕЛЬНО) */
-.wax-seal {
-    position: absolute;
-    top: 50%; /* По центру вертикали конверта */
-    left: 50%;
-    transform: translate(-50%, -20%); /* Сдвиг, чтобы была на острие клапана */
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fcf6ba, #d4af37 70%, #b38728 100%);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    z-index: 4; /* Самый верхний слой */
-    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #8b6508;
-    font-weight: bold;
-    font-size: 20px;
-}
-/* Можно добавить инициалы на печать, если хочется */
-.wax-seal::after {
-    content: 'R&A';
-    font-size: 14px;
-    font-family: sans-serif;
-    opacity: 0.6;
-}
+        /* Верхний клапан */
+        .envelope-flap {
+            position: absolute;
+            top: 0; width: 100%; height: 100%;
+            background: #0d3826;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.6s ease;
+            transform-origin: top;
+            z-index: 40;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
 
+        /* Сургучная печать */
+        .wax-seal {
+            position: absolute;
+            bottom: 15%; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, #fcf6ba 0%, #d4af37 100%);
+            border-radius: 50%;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 0 5px rgba(0,0,0,0.2);
+        }
 
-/* КАРТОЧКА (ПИСЬМО) */
-.letter {
-    position: absolute;
-    bottom: 5px; /* Чуть приподнято внутри */
-    left: 4%;
-    width: 92%;
-    /* Высота автоматическая, зависит от контента, но ограничена */
-    height: auto; 
-    max-height: 150%; /* Чтобы не было слишком длинным */
-    background: white;
-    border-radius: 6px;
-    padding: 25px 15px; /* Увеличил padding */
-    box-sizing: border-box;
-    
-    /* Изначальное состояние - скрыто и внизу */
-    transform: translateY(10%); 
-    opacity: 0;
-    
-    /* Плавный переход */
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out;
-    
-    /* Слой между фоном конверта и закрытым клапаном */
-    z-index: 2; 
+        /* Два кольца на печати */
+        .wax-seal::after {
+            content: '';
+            width: 35px; height: 35px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="rgba(138,109,29,0.8)" stroke-width="3"><circle cx="24" cy="32" r="12"/><circle cx="40" cy="32" r="12"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Центрируем контент по вертикали */
-    align-items: center;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    overflow: hidden; /* Если контента много */
-}
+        /* Карточка */
+        .letter {
+            position: absolute;
+            bottom: 10px; left: 15px; right: 15px;
+            height: 280px;
+            background: #fff;
+            padding: 25px 20px;
+            box-sizing: border-box;
+            z-index: 20;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
 
-/* ТЕКСТ ВНУТРИ ПИСЬМА */
-.letter-content {
-    width: 100%;
-    text-align: center;
-}
+        .letter h1 {
+            font-size: 20px;
+            margin: 5px 0;
+            background: var(--gold-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
 
-.letter h1 {
-    font-size: 20px;
-    margin: 10px 0;
-    background: var(--gold-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--gold-color); /* Fallback */
-}
+        .event-block {
+            border-top: 1px solid #d4af37;
+            border-bottom: 1px solid #d4af37;
+            padding: 12px 0;
+            margin: 10px 0;
+        }
 
-.letter p {
-    font-size: 15px;
-    margin: 5px 0;
-    color: #333;
-    line-height: 1.4;
-}
+        .location-btn {
+            background: var(--velvet-green);
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #d4af37;
+            border-radius: 2px;
+        }
 
-/* БЛОК ДАТЫ */
-.date-block {
-    border-top: 1px solid rgba(212, 175, 55, 0.5);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.5);
-    margin: 15px 0;
-    padding: 10px 0;
-    width: 100%;
-}
+        /* Анимации открытия */
+        .open .envelope-flap { 
+            transform: rotateX(180deg); 
+            z-index: 10; 
+        }
+        .open .letter { 
+            transform: translateY(-160px); 
+        }
+        .open .wax-seal { 
+            opacity: 0; 
+            pointer-events: none; 
+        }
 
-.date-block p.main-date {
-    font-weight: bold;
-    color: #b38728;
-    font-size: 16px;
-}
-
-/* НАВИГАЦИЯ */
-.nav-info {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 15px;
-}
-
-/* КНОПКА */
-.location-btn {
-    display: inline-block;
-    padding: 12px 24px;
-    font-size: 14px;
-    background: var(--velvet-green-base);
-    color: white !important;
-    text-decoration: none;
-    border-radius: 25px; /* Овальная кнопка */
-    transition: background 0.3s;
-    border: none;
-    font-family: sans-serif;
-    font-weight: bold;
-}
-.location-btn:active {
-    background: #164a36;
-}
-
-/* --- СОСТОЯНИЕ "ОТКРЫТО" (.open) --- */
-
-/* 1. Клапан откидывается назад */
-.envelope-wrapper.open .envelope-flap {
-    transform: rotateX(180deg);
-    z-index: 1; /* Уходит ЗА письмо */
-}
-
-/* 2. Печать исчезает */
-.envelope-wrapper.open .wax-seal {
-    opacity: 0;
-    transform: translate(-50%, -20%) scale(0.8); /* Чуть уменьшается */
-    pointer-events: none; /* Чтобы не мешала кликать по письму */
-}
-
-/* 3. Письмо выдвигается вверх */
-.envelope-wrapper.open .letter {
-    transform: translateY(-40%); /* Выдвигаем вверх. Подберите процент под размер письма */
-    opacity: 1;
-}
-
-/* ПОДСКАЗКА (СНАРУЖИ) */
-.instruction {
-    position: absolute;
-    bottom: -35px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 12px;
-    color: #555;
-    font-family: sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: opacity 0.3s;
-}
-.envelope-wrapper.open .instruction {
-    opacity: 0; /* Скрываем подсказку, когда открыто */
-}
-
-
-/* АДАПТИВНОСТЬ ПОД МАЛЕНЬКИЕ ЭКРАНЫ */
-@media (max-width: 360px) {
-    :root {
-        --envelope-h: 65vw; /* Чуть выше конверт на узких экранах */
-    }
-    .letter {
-        padding: 20px 10px;
-    }
-    .letter h1 {
-        font-size: 18px;
-    }
-    .letter p {
-        font-size: 14px;
-    }
-    .date-block p.main-date {
-        font-size: 15px;
-    }
-    .wax-seal {
-        width: 45px;
-        height: 45px;
-    }
-}
-</style>
+        .instruction {
+            position: absolute;
+            bottom: -50px; width: 100%;
+            text-align: center; font-size: 12px; 
+            color: #444; font-style: italic;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="envelope-wrapper" onclick="this.classList.toggle('open')">
-    
-    <div class="envelope-flap"></div>
-    
-    <div class="wax-seal"></div>
+<div id="mainWrap" class="main-container">
+    <div class="envelope-wrapper" onclick="toggleEnvelope()">
+        <div class="envelope-flap">
+            <div class="wax-seal"></div>
+        </div>
 
-    <div class="letter">
-        <div class="letter-content">
+        <div class="letter">
             <div>
-                <p style="font-style: italic; color: #555;">Рауль и Александра</p>
+                <p style="margin:0; font-style:italic; color:#777; font-size:14px;">Рауль и Александра</p>
                 <h1>Приглашают Вас</h1>
-                <p>на ланч по случаю свадьбы</p>
+                <p style="font-size:14px; margin-top: 10px;">на ланч по случаю свадьбы</p>
             </div>
 
-            <div class="date-block">
-                <p class="main-date">27 МАРТА | 14:00</p>
-                <p>Кафе Ботанического сада</p>
+            <div class="event-block">
+                <span style="color:#b38728; font-weight:bold; font-size:16px;">27 МАРТА | 14:00</span>
+                <p style="margin:5px 0 0; font-size:14px; color: #333;">Кафе Ботанического сада</p>
             </div>
 
-            <div class="nav-info">
-                Вход со стороны ул. Сурганова
-            </div>
-
-            <a href="https://maps.google.com/?q=Кафе+Ботанического+суда+Минск"
-               target="_blank"
-               class="location-btn"
-               onclick="event.stopPropagation()">
-               Открыть карту
+            <a href="https://maps.google.com" class="location-btn" target="_blank" onclick="event.stopPropagation()">
+                Открыть локацию
             </a>
         </div>
-    </div>
 
-    <div class="instruction">Нажмите, чтобы открыть</div>
+        <div class="instruction">Нажмите на конверт</div>
+    </div>
 </div>
+
+<script>
+    function toggleEnvelope() {
+        const wrap = document.querySelector('.envelope-wrapper');
+        const main = document.getElementById('mainWrap');
+        
+        wrap.classList.toggle('open');
+        main.classList.toggle('shifted');
+    }
+</script>
 
 </body>
 </html>
